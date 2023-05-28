@@ -23,6 +23,12 @@ def chat_with_model():
     question = st.text_input("Ask a question:")
     # input_text = " "
     
+    # Print chat history
+    # st.subheader("Chat History:")
+    for i, (q, a) in enumerate(chat_history):
+        st.write(f"Q{i+1}: {q}")
+        st.write(f"A{i+1}: {a}")
+    
     result = qa({"question": question, "chat_history": chat_history})
     chat_history.append((question, result["answer"]))
     
