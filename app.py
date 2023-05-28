@@ -1,13 +1,17 @@
 import streamlit as st
 import openai
 import os
-
-os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
-
-
-# Import necessary libraries from LangChain tutorial:
+from langchain.document_loaders import PyPDFLoader
+from langchain.chains.question_answering import load_qa_chain
+from langchain.llms import OpenAI
+from langchain.chains import ConversationalRetrievalChain
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.vectorstores import Chroma
+
+secrets = st.secrets["OPENAI_API_KEY"]
+os.environ["OPENAI_API_KEY"] = secrets
+
+
 
 # Create embeddings using OpenAI API
 embeddings = OpenAIEmbeddings()
@@ -22,7 +26,7 @@ if not os.path.exists(embeddings_dir_name):
 persist_path_full = os.path.join(embeddings_dir_name, db_filename)
 
 # Load the existing persisted database from disk.
-embeddings = OpenAIEmbeddings()
+# embeddings = OpenAIEmbeddings()
 vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
 
 
@@ -67,6 +71,7 @@ def main():
         user_input = st.text_input("Enter", key=len(st.session_state["messages"]))
 
     if user_input:
+        # Reset the chat history
         st.session_state['messages'] = []
         # Append user message to the conversation
         new_message = {"role": "user", "content": user_input}
