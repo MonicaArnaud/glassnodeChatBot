@@ -14,21 +14,21 @@ os.environ["OPENAI_API_KEY"] = secrets
 
 
 # Create embeddings using OpenAI API
-embeddings = OpenAIEmbeddings()
+# embeddings = OpenAIEmbeddings()
 
-print("Loading Existing DB!")
-embeddings_dir_name = "model"
-db_filename = "chromadb"
+# print("Loading Existing DB!")
+# embeddings_dir_name = "model"
+# db_filename = "chromadb"
 
-if not os.path.exists(embeddings_dir_name):
-    os.makedirs(embeddings_dir_name)
+# if not os.path.exists(embeddings_dir_name):
+#     os.makedirs(embeddings_dir_name)
 
-persist_path_full = os.path.join(embeddings_dir_name, db_filename)
+persist_path_full = "model/chromadb"
 
 # Load the existing persisted database from disk.
-# embeddings = OpenAIEmbeddings()
+embeddings = OpenAIEmbeddings()
 vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
-
+# load_vectordb = Annoy.load(persist_path_full, embeddings = embeddings_function)
 
 # Define the chatbot function
 def chat_with_model(messages):
