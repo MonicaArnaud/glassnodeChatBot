@@ -11,37 +11,33 @@ from langchain.vectorstores import Chroma
 secrets = st.secrets["OPENAI_API_KEY"]
 os.environ["OPENAI_API_KEY"] = secrets
 
-
-
-# Create embeddings using OpenAI API
-# embeddings = OpenAIEmbeddings()
-
-# print("Loading Existing DB!")
-# embeddings_dir_name = "model"
-# db_filename = "chromadb"
-
-# if not os.path.exists(embeddings_dir_name):
-#     os.makedirs(embeddings_dir_name)
-
-persist_path_full = "model/chromadb"
-
 # Load the existing persisted database from disk.
+persist_path_full = "model/chromadb"
 embeddings = OpenAIEmbeddings()
 vectordb = Chroma(persist_directory=persist_path_full, embedding_function=embeddings)
-# load_vectordb = Annoy.load(persist_path_full, embeddings = embeddings_function)
 
 # Define the chatbot function
-def chat_with_model(messages):
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages,
-        max_tokens=500,
-    )
-    return response.choices[0].message.content
+qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.7), vectordb.as_retriever())
+chat_history = []
+def chat_with_model():
+    question = st.text_input("Ask a question:")
+    # input_text = " "
+    
+    result = qa({"question": question, "chat_history": chat_history})
+    chat_history.append((question, result["answer"]))
+    st.write(result)
+    
+# def chat_with_model(messages):
+#     response = openai.ChatCompletion.create(
+#         model="gpt-3.5-turbo",
+#         messages=messages,
+#         max_tokens=500,
+#     )
+#     return response.choices[0].message.content
 
-def find_related_documents(query):
-    docs_with_scores_and_content_texts = vectordb.similarity_search_with_score(query)[:3]
-    return [doc.page_content for doc,_ in docs_with_scores_and_content_texts]
+#def find_related_documents(query):
+#     docs_with_scores_and_content_texts = vectordb.similarity_search_with_score(query)[:3]
+#     return [doc.page_content for doc,_ in docs_with_scores_and_content_texts]
 
 
 # Streamlit app code
