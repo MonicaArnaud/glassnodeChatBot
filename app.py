@@ -24,7 +24,7 @@ def chat_with_model():
     # input_text = " "
     
     # Print chat history
-    st.subheader("Chat History:")
+    # st.subheader("Chat History:")
     for i, (q, a) in enumerate(chat_history):
         st.write(f"Q{i+1}: {q}")
         st.write(f"A{i+1}: {a}")
