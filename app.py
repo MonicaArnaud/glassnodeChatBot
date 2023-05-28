@@ -3,7 +3,6 @@ import openai
 import os
 
 os.environ["OPENAI_API_KEY"] = "OPENAI_API_KEY"
-# Solve VPN problem
 
 
 # Import necessary libraries from LangChain tutorial:
@@ -43,7 +42,7 @@ def find_related_documents(query):
 
 # Streamlit app code
 def main():
-    st.title("Chatbot Demo")
+    st.title("Glassnode Chatbot Demo")
 
     if 'messages' not in st.session_state:
         st.session_state['messages'] = []
