@@ -35,7 +35,7 @@ def chat_with_model(messages):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=messages,
-        max_tokens=1000,
+        max_tokens=500,
     )
     return response.choices[0].message.content
 
