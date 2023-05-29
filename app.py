@@ -170,7 +170,8 @@ def generate_response():
     # Call the Chat Completions API with the messages
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=messages
+        messages=messages,
+        stream=True
     )
 
     # Extract the assistant's message from the response
