@@ -147,20 +147,20 @@ def generate_response():
          "message": st.session_state.prompt,
          "is_user": True
      })
-  messages = construct_messages(st.session_state.history) 
-  messages.append(new_message)
+   messages = construct_messages(st.session_state.history) 
+   messages.append(new_message)
   # Ensure total tokens do not exceed model's limit 
-  messages = ensure_fit_tokens(messages)
+   messages = ensure_fit_tokens(messages)
   # Call the Chat completion API with the messages
-  response = openai.ChatCompletion.create(
+   response = openai.ChatCompletion.create(
       model = "gpt-3.5-turbo"
       messages = messages
   )
   
   # Extract the assistant's message from response
-  assistant_message = response['choice'][0]['message']['content']
+   assistant_message = response['choice'][0]['message']['content']
   # Append assistant's message to history
-  st.session_state.history.append({
+   st.session_state.history.append({
         "message": assistant_message,
         "is_user": False
   })  
