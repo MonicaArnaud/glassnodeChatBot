@@ -134,7 +134,7 @@ def construct_messages(history):
     
     for entry in history:
         role = "user" if entry["is_user"] else "assistant"
-        messages.append({"role":role, "content": entry["message"]}
+        messages.append({"role":role, "content": entry["message"]})
    # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
     return messages 
