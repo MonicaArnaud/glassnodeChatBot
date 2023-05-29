@@ -142,28 +142,36 @@ def construct_messages(history):
                         
 # Function to generate response
 def generate_response():
-     # Append user's query to history
+    # Append user's query to history
     st.session_state.history.append({
-         "message": st.session_state.prompt,
-         "is_user": True
-     })
-   messages = construct_messages(st.session_state.history) 
-   messages.append(new_message)
-  # Ensure total tokens do not exceed model's limit 
-   messages = ensure_fit_tokens(messages)
-  # Call the Chat completion API with the messages
-   response = openai.ChatCompletion.create(
-      model = "gpt-3.5-turbo"
-      messages = messages
-  )
-  
-  # Extract the assistant's message from response
-   assistant_message = response['choice'][0]['message']['content']
-  # Append assistant's message to history
-   st.session_state.history.append({
+        "message": st.session_state.prompt,
+        "is_user": True
+    })
+    
+    
+    # Construct messages from chat history
+    messages = construct_messages(st.session_state.history)
+    
+    # Add the new_message to the list of messages before sending it to the API
+    messages.append(new_message)
+    
+    # Ensure total tokens do not exceed model's limit
+    messages = ensure_fit_tokens(messages)
+    
+    # Call the Chat Completions API with the messages
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+
+    # Extract the assistant's message from the response
+    assistant_message = response['choices'][0]['message']['content']
+    
+    # Append assistant's message to history
+    st.session_state.history.append({
         "message": assistant_message,
         "is_user": False
-  })  
+    })
 # Take user input
 st.text_input("Enter your prompt:",
               key="prompt",
