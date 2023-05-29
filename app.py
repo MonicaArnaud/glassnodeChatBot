@@ -162,7 +162,7 @@ def generate_response():
     messages = construct_messages(st.session_state.history)
     
     # Add the new_message to the list of messages before sending it to the API
-    messages.append(new_message)
+    # messages.append(new_message)
     
     # Ensure total tokens do not exceed model's limit
     messages = ensure_fit_tokens(messages)
