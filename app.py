@@ -186,7 +186,7 @@ st.title("Glassnode Chatbot Demo")
 
 st.text_input("Enter your prompt:",
               key="prompt",
-              placeholder="e.g. 'How can I diversify my portfolio?'",
+              placeholder="e.g. 'What are the Bitcoin price bottom metrics?'",
               on_change=generate_response
               )
 
