@@ -1,7 +1,8 @@
 openai
 pandas
 openpyxl
-tiktoken
+tiktoken==0.4.0
+retrying==1.3.4
 chromadb
 nest_asyncio
 typing_extensions==4.6.0
